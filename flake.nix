@@ -6,6 +6,10 @@
         path = ./rust-fullstack;
         description = "rust fullsatck starter template";
       };
+      go = {
+        path = ./go;
+        description = "go lang starter template";
+      };
     };
   };
 }
