@@ -1,4 +1,5 @@
 {
+  description = "rust fullstack flake for proper development";
   inputs = {
     naersk.url = "github:nix-community/naersk/master";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
