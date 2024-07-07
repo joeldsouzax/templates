@@ -21,11 +21,9 @@
               rustfmt
               pre-commit
               rustPackages.clippy
-              rust-analyzer
               cargo-watch
             ];
             RUST_SRC_PATH = rustPlatform.rustLibSrc;
           };
-
       });
 }
