@@ -1,0 +1,12 @@
+#+title: Http
+
+* Introduction
+- contains all the http routes and their response
+- this is not a testing file, its just as a reference, a thunderclient alternative if you work with emacs, a one short way to check apis and their responses.
+
+
+* Api List
+** Hello World
+#+begin_src restclient
+GET http://localhost:3000/hello
+#+end_src
