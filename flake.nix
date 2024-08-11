@@ -1,6 +1,6 @@
 {
   description = "https://github.com/joeldsouzax flake templates";
-  outputs = { self, ... }: {
+  outputs = { selff, ... }: {
     templates = {
       rust-fullstack = {
         path = ./rust-fullstack;
