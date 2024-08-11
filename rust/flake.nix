@@ -31,7 +31,11 @@
         devShells.default = mkShell {
           inherit nativeBuildInputs buildInputs;
           shellHook = ''
-            echo "minimal rust nix project"
+            echo "minimal rust project"
+            echo "creating cargo project"
+            if [ ! -f Cargo.toml ]; then
+                cargo init
+            fi
           '';
         };
       });
