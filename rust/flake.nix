@@ -18,6 +18,8 @@
           ./rust-toolchain.toml;
 
         nativeBuildInputs = with pkgs; [ rustToolchain ];
+
+        # TODO: only get apple specific buildinputs when its apple computer.
         ## darwin sdks for apple systems.
         buildInputs = with pkgs; [
           darwin.apple_sdk.frameworks.SystemConfiguration
