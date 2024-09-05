@@ -27,7 +27,8 @@
           darwin.apple_sdk.frameworks.CoreFoundation
         ];
 
-        allBuildInputs = if system.isDarwin then
+        allBuildInputs = if system.name == "aarch64-darwin" || system.name
+        == "x86_64-darwin" then
           commonBuildInputs ++ macOSBuildInputs
         else
           commonBuildInputs;
