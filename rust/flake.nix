@@ -27,11 +27,11 @@
           darwin.apple_sdk.frameworks.CoreFoundation
         ];
 
-        allBuildInputs = if system.name == "aarch64-darwin" || system.name
-        == "x86_64-darwin" then
-          commonBuildInputs ++ macOSBuildInputs
-        else
-          commonBuildInputs;
+        allBuildInputs =
+          if system == "aarch64-darwin" || system == "x86_64-darwin" then
+            commonBuildInputs ++ macOSBuildInputs
+          else
+            commonBuildInputs;
       in with pkgs; {
         devShells.default = mkShell {
           inherit nativeBuildInputs;
