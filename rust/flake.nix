@@ -17,7 +17,7 @@
         rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile
           ./rust-toolchain.toml;
 
-        nativeBuildInputs = [ rustToolchain ];
+        nativeBuildInputs = with pkgs; [ rustToolchain ];
 
         commonBuildInputs = with pkgs; [ cargo-watch ];
 
