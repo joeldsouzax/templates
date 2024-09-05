@@ -17,19 +17,24 @@
         rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile
           ./rust-toolchain.toml;
 
-        nativeBuildInputs = with pkgs; [ rustToolchain ];
+        nativeBuildInputs = [ rustToolchain ];
 
-        # TODO: only get apple specific buildinputs when its apple computer.
-        ## darwin sdks for apple systems.
-        buildInputs = with pkgs; [
+        commonBuildInputs = with pkgs; [ cargo-watch ];
+
+        macOSBuildInputs = with pkgs; [
           darwin.apple_sdk.frameworks.SystemConfiguration
           darwin.apple_sdk.frameworks.CoreServices
           darwin.apple_sdk.frameworks.CoreFoundation
-          cargo-watch
         ];
+
+        allBuildInputs = if system.isDarwin then
+          commonBuildInputs ++ macOSBuildInputs
+        else
+          commonBuildInputs;
       in with pkgs; {
         devShells.default = mkShell {
-          inherit nativeBuildInputs buildInputs;
+          inherit nativeBuildInputs;
+          buildInputs = allBuildInputs;
           shellHook = ''
             echo "minimal rust project"
             echo "creating cargo project"
