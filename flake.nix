@@ -10,6 +10,10 @@
         path = ./rust;
         description = "minimal rust nix project starter";
       };
+      node = {
+        path = ./node;
+        description = "minimal node nix starter project";
+      };
     };
   };
 }
