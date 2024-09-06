@@ -7,8 +7,13 @@
       url = "github:oxalica/rust-overlay";
       inputs = { nixpkgs.follows = "nixpkgs"; };
     };
+
+    crane = {
+      url = "github:ipetkov/crane";
+      inputs = { nixpkgs.follows = "nixpkgs"; };
+    };
   };
-  outputs = { nixpkgs, utils, rust-overlay, ... }:
+  outputs = { nixpkgs, utils, rust-overlay, crane, ... }:
     utils.lib.eachDefaultSystem (system:
       let
         overlays = [ (import rust-overlay) ];
@@ -17,9 +22,10 @@
         rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile
           ./rust-toolchain.toml;
 
-        nativeBuildInputs = with pkgs; [ rustToolchain ];
+        craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
+        src = craneLib.cleanCargoSource ./.;
 
-        commonBuildInputs = with pkgs; [ cargo-watch ];
+        nativeBuildInputs = with pkgs; [ rustToolchain ];
 
         macOSBuildInputs = with pkgs; [
           darwin.apple_sdk.frameworks.SystemConfiguration
@@ -27,15 +33,31 @@
           darwin.apple_sdk.frameworks.CoreFoundation
         ];
 
-        allBuildInputs =
+        buildInputs = with pkgs;
           if system == "aarch64-darwin" || system == "x86_64-darwin" then
-            commonBuildInputs ++ macOSBuildInputs
+            macOSBuildInputs
           else
-            commonBuildInputs;
+            [ ];
+
+        commonArgs = {
+          inherit src buildInputs nativeBuildInputs;
+          strictDeps = true;
+        };
+        cargoArtifacts = craneLib.buildDepsOnly commonArgs;
+
+        bin = craneLib.buildPackage (commonArgs // {
+          inherit cargoArtifacts;
+        }); # actual app building here :D
+
       in with pkgs; {
-        devShells.default = mkShell {
-          inherit nativeBuildInputs;
-          buildInputs = allBuildInputs;
+        packages = {
+          inherit bin;
+          default = bin;
+        };
+
+        devShells.default = craneLib.devShell {
+          inputsFrom = [ bin ];
+          packages = [ cargo-watch ];
           shellHook = ''
             echo "minimal rust project"
             echo "creating cargo project"
