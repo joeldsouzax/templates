@@ -49,9 +49,17 @@
           inherit cargoArtifacts;
         }); # actual app building here :D
 
+        # docker image
+        image = pkgs.dockerTools.streamLayeredImage {
+          name = "my-app";
+          created = "now";
+          copyToRoot = [ bin ];
+          config = { Cmd = [ "${bin}/bin/my-app" ]; };
+        };
+
       in with pkgs; {
         packages = {
-          inherit bin;
+          inherit bin image;
           default = bin;
         };
 
