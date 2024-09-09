@@ -47,7 +47,7 @@
         }); # actual app building here :D
 
         # docker image
-        image = pkgs.dockerTools.streamLayeredImage {
+        image = pkgs.dockerTools.buildLayeredImage {
           name = "my-app";
           created = "now";
           copyToRoot = [ bin ];
