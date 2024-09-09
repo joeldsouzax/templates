@@ -63,13 +63,6 @@
         devShells.default = craneLib.devShell {
           inputsFrom = [ bin ];
           packages = [ cargo-watch ];
-          shellHook = ''
-            echo "minimal rust project"
-            echo "creating cargo project"
-            if [ ! -f Cargo.toml ]; then
-                cargo init
-            fi
-          '';
         };
       });
 }
