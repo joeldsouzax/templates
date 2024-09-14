@@ -15,6 +15,7 @@
       let
         overlays = [ (import rust-overlay) ];
         pkgs = import nixpkgs { inherit system overlays; };
+        inherit (pkgs) lib;
 
         rustToolchain = pkgs.pkgsBuildHost.rust-bin.fromRustupToolchainFile
           ./rust-toolchain.toml;
@@ -22,19 +23,16 @@
         craneLib = (crane.mkLib pkgs).overrideToolchain rustToolchain;
         src = craneLib.cleanCargoSource ./.;
 
-        nativeBuildInputs = with pkgs; [ rustToolchain ];
+        nativeBuildInputs = [ rustToolchain ]
+          ++ lib.optionals pkgs.stdenv.isDarwin [
+            pkgs.apple_sdk.framework.Foundation
+            # pkgs.darwin.apple_sdk.frameworks.SystemConfiguration
+            # pkgs.darwin.apple_sdk.frameworks.CoreServices
+            # pkgs.darwin.apple_sdk.frameworks.CoreFoundation
+          ];
 
-        macOSBuildInputs = with pkgs; [
-          darwin.apple_sdk.frameworks.SystemConfiguration
-          darwin.apple_sdk.frameworks.CoreServices
-          darwin.apple_sdk.frameworks.CoreFoundation
-        ];
-
-        buildInputs = with pkgs;
-          if system == "aarch64-darwin" || system == "x86_64-darwin" then
-            macOSBuildInputs
-          else
-            [ ];
+        buildInputs = [ ]
+          ++ lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
 
         commonArgs = {
           inherit src buildInputs nativeBuildInputs;
