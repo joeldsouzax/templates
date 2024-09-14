@@ -25,7 +25,7 @@
 
         nativeBuildInputs = [ rustToolchain ]
           ++ lib.optionals pkgs.stdenv.isDarwin [
-            pkgs.darwin.apple_sdk.framework.Foundation
+            pkgs.darwin.apple_sdk.frameworks.Foundation
             # pkgs.darwin.apple_sdk.frameworks.SystemConfiguration
             # pkgs.darwin.apple_sdk.frameworks.CoreServices
             # pkgs.darwin.apple_sdk.frameworks.CoreFoundation
