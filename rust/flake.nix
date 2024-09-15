@@ -26,9 +26,9 @@
         nativeBuildInputs = [ rustToolchain ]
           ++ lib.optionals pkgs.stdenv.isDarwin [
             pkgs.darwin.apple_sdk.frameworks.Foundation
-            # pkgs.darwin.apple_sdk.frameworks.SystemConfiguration
-            # pkgs.darwin.apple_sdk.frameworks.CoreServices
-            # pkgs.darwin.apple_sdk.frameworks.CoreFoundation
+            pkgs.darwin.apple_sdk.frameworks.SystemConfiguration
+            pkgs.darwin.apple_sdk.frameworks.CoreServices
+            pkgs.darwin.apple_sdk.frameworks.CoreFoundation
           ];
 
         buildInputs = [ ]
@@ -48,7 +48,7 @@
         image = pkgs.dockerTools.buildLayeredImage {
           name = "my-app";
           created = "now";
-          copyToRoot = [ bin ];
+          contents = [ bin ];
           config = { Cmd = [ "${bin}/bin/my-app" ]; };
         };
 
@@ -60,7 +60,7 @@
 
         devShells.default = craneLib.devShell {
           inputsFrom = [ bin ];
-          packages = [ cargo-watch ];
+          packages = [ cargo-watch dive ];
         };
       });
 }
