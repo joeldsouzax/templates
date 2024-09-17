@@ -4,9 +4,9 @@
 ** TODO update the readme to have reference to my system nix configuration which would have the language servers and stuff
 
 [[file:~/Code/templates/rust-fullstack/flake.nix::RUST_SRC_PATH = rustPlatform.rustLibSrc;]]
-** TODO remove the editor/language server dev shell from rust flake, it should be language server/ide agnostic.
+** DONE remove the editor/language server dev shell from rust flake, it should be language server/ide agnostic.
 
 [[file:~/Code/templates/rust-fullstack/flake.nix::};]]
-** TODO Update the rust template to have rust overlay
+** DONE Update the rust template to have rust overlay
 
 [[file:~/Code/templates/rust-fullstack/flake.nix::let]]

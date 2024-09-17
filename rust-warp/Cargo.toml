@@ -1,0 +1,5 @@
+[package]
+name = "app-name" ## change this
+edition = "2021"
+version = "0.1.0"
+authors = ["Joel DSouza <joeldsouzax@gmail.com>"]
