@@ -79,6 +79,13 @@
         devShells.default = craneLib.devShell {
           inputsFrom = [ bin ];
           packages = [ cargo-watch ];
+          shellHook = ''
+            echo "adding much needed libs to setup the dependencies for this project"
+            cargo add tokio -F full
+            cargo add warp
+            cargo add serde -F derive
+            cargo add serde_json
+          '';
         };
       });
 }
