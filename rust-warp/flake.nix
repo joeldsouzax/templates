@@ -78,18 +78,7 @@
 
         devShells.default = craneLib.devShell {
           inputsFrom = [ bin ];
-          packages = [ cargo-watch ];
-
-          ## TODO: if Cargo.toml contains the following deps ignore
-          ## TODO: if not then install.
-          ## TODO: if the cargo.toml package.name does not match the curr directory then change it to the dir name as well
-          shellHook = ''
-            echo "adding much needed libs to setup the dependencies for this project"
-            cargo add tokio -F full
-            cargo add warp
-            cargo add serde -F derive
-            cargo add serde_json
-          '';
+          packages = [ cargo-watch sqlx-cli ];
         };
       });
 }
