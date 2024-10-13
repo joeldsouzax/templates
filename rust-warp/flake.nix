@@ -46,7 +46,8 @@
             pkgs.darwin.apple_sdk.frameworks.CoreFoundation
           ];
 
-        buildInputs = [ ]
+        buildInputs = with pkgs;
+          [ podman podman-compose ]
           ++ lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
 
         commonArgs = {

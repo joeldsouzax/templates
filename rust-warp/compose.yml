@@ -1,0 +1,16 @@
+---
+services:
+  postgres:
+    image: postgres:17.0
+    container_name: "rust-warp-db" #change this name
+    ports:
+      - 5432:5432
+    restart: 'always'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: sphynx
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
